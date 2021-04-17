@@ -3,7 +3,7 @@ import os
 from discord.utils import get
 from discord.ext import commands
 from discord.ext.commands import Bot
-from discord.ext.commands import Cog
+
 
 client = discord.Client()
 client = commands.Bot(command_prefix = 'm!')
@@ -30,6 +30,26 @@ async def hello(ctx):
   await ctx.send('hello wassup')
 
 @client.command()
+async def add(ctx, a: int, b: int):
+  embed = discord.Embed(title='Sum is', description=a+b, color=discord.Colour.orange())
+  await ctx.send(embed=embed)
+
+@client.command()
+async def subtract(ctx, a:int, b:int):
+  embed = discord.Embed(title='Answer is', description=a-b, color=discord.Colour.orange())
+  await ctx.send(embed=embed)
+
+@client.command()
+async def divide(ctx, a:int, b:int):
+  await ctx.send("Answer is")
+  await ctx.send(a/b)
+
+@client.command()
+async def multiply(ctx, a:int, b:int):
+  embed = discord.Embed(title='Product is', description=a*b, color=discord.Colour.orange())
+  await ctx.send(embed=embed)
+
+@client.command()
 async def happy(ctx):
   await ctx.send('https://lh3.googleusercontent.com/-TDOZH1jyfrk/YHUKL5QbYRI/AAAAAAAAF5I/SGbTLDBvPy43laY2-wLDMZ8o1hvoztOPQCK8BGAsYHg/s0/2021-04-12.png?authuser=1')
 
@@ -40,6 +60,10 @@ async def greedy(ctx):
 @client.command()
 async def think(ctx):
   await ctx.send('https://lh3.googleusercontent.com/-RgUoJw3xe60/YHUJxmGaV9I/AAAAAAAAF5A/xk40NX3ux00Dmf2S-2uPqTQqAnUXhdg6ACK8BGAsYHg/s0/2021-04-12.png?authuser=1')
+
+@client.command()
+async def depressed(ctx):
+  await ctx.send('https://lh3.googleusercontent.com/-8AGIUMTpdpg/YHnWNoVuWsI/AAAAAAAAF6E/Jl1Uyfwn7uw_TPm-_1DfYoyIzX2I5eCygCK8BGAsYHg/s0/2021-04-16.png?authuser=2')
 
 @client.command(pass_context = True)
 @commands.has_permissions(kick_members=True)
@@ -65,6 +89,7 @@ async def help(ctx):
   embed.add_field(name="historyhelp", value="Get history help from history/civics helpers", inline=True) 
   embed.add_field(name="help2", value="Brings up help command for moderation events and 2 column of commands", inline=False) 
   embed.add_field(name="help3", value="Brings up help command for emotion commands and 3rd column of commands", inline=False) 
+  embed.add_field(name="help4", value="Brings up help command for math commands and 4th column of commands", inline=False) 
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
   await ctx.send(embed=embed)
 
@@ -86,6 +111,17 @@ async def help3(ctx):
   embed.add_field(name="happy", value="Sends a picture of someone happy", inline=True) 
   embed.add_field(name="greedy", value="Sends a picture of someone greedy", inline=False)
   embed.add_field(name="think", value="Sends a picture of someone thinking", inline=False)
+  embed.add_field(name="depressed", value="Sends a picture of someone depressed", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
+  await ctx.send(embed=embed)
+
+@client.command(pass_context=True)
+async def help4(ctx):
+  embed=discord.Embed(title='Math Commands', description="Prefix is 'm!'. Math commands such as add and multiply will appear here", color=discord.Colour.blue())
+  embed.add_field(name="add", value="Adds two integers", inline=True) 
+  embed.add_field(name="subtract", value="Subtracts two integers", inline=False)
+  embed.add_field(name="multiply", value="Multiplies two integers", inline=False)
+  embed.add_field(name="divide", value="Divides two integers", inline=False)
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
   await ctx.send(embed=embed)
 
@@ -116,13 +152,16 @@ async def elahelp(ctx):
 @client.command()
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member : discord.Member, *, reason=None):
+    embed=discord.Embed(title="Member kicked", description="Member has been kicked by an administrator for violating the rules", color=discord.Colour.green())
     await member.kick(reason=reason)
-    await ctx.send(f'User {member.mention} has been kicked')
+    await ctx.send(embed=embed)
 
 @client.command()
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member : discord.Member, *, reason=None):
+  embed=discord.Embed(title="Member banned", description="Member has been banned by an admin for violating the rules", color=discord.Colour.green())
   await member.ban(reason=reason)
+  await ctx.send(embed=embed)
   await ctx.send(f'User {member.mention} has been banned')
 
 @client.command()
