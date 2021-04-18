@@ -30,6 +30,11 @@ async def hello(ctx):
   await ctx.send('hello wassup')
 
 @client.command()
+async def invite(ctx):
+  await ctx.send("Link to invite the bot to your different servers: ")
+  await ctx.send("https://discord.com/api/oauth2/authorize?client_id=806197421528318003&permissions=8&scope=bot")
+
+@client.command()
 async def add(ctx, a: int, b: int):
   embed = discord.Embed(title='Sum is', description=a+b, color=discord.Colour.orange())
   await ctx.send(embed=embed)
@@ -87,6 +92,7 @@ async def help(ctx):
   embed.add_field(name="sciencehelp", value="Get science help from science helpers", inline=False) 
   embed.add_field(name="elahelp", value="Get ela help from ela helpers", inline=False) 
   embed.add_field(name="historyhelp", value="Get history help from history/civics helpers", inline=True) 
+  embed.add_field(name="invite", value="Brings up the link to invite this bot to your different servers", inline=False) 
   embed.add_field(name="help2", value="Brings up help command for moderation events and 2 column of commands", inline=False) 
   embed.add_field(name="help3", value="Brings up help command for emotion commands and 3rd column of commands", inline=False) 
   embed.add_field(name="help4", value="Brings up help command for math commands and 4th column of commands", inline=False) 
