@@ -126,7 +126,8 @@ async def help(ctx):
   embed.add_field(name="😎 Emotions", value="m!help emotions", inline=True)
   embed.add_field(name="🏫 School", value="m!help school", inline=True)
   embed.add_field(name="🔢 Math", value="m!help math", inline=True)
-  embed.add_field(name="✨ Other", value="m!help other", inline=True)
+  embed.add_field(name="✨ Other", value="m!help math", inline=True)
+  embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
   await ctx.send(embed=embed)
 
@@ -142,6 +143,7 @@ async def moderation(ctx):
   embed.add_field(name="tempmute", value="Mutes the user for a certain amount of time(measured in seconds) do m!tempmute {user} {time}", inline=False)  
   embed.add_field(name="clear", value="Clears the previous 10 messages from anyone", inline=False)
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   await ctx.send(embed=embed)
 
 @help.command(name='emotions')
@@ -151,6 +153,7 @@ async def emotion(ctx):
   embed.add_field(name="greedy", value="Sends a picture of someone greedy", inline=False)
   embed.add_field(name="think", value="Sends a picture of someone thinking", inline=False)
   embed.add_field(name="depressed", value="Sends a picture of someone depressed", inline=False)
+  embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
   await ctx.send(embed=embed)
 
@@ -161,6 +164,7 @@ async def school(ctx):
   embed.add_field(name="sciencehelp", value="Get science help from science helpers", inline=False) 
   embed.add_field(name="elahelp", value="Get ela help from ela helpers", inline=False) 
   embed.add_field(name="historyhelp", value="Get history help from history/civics helpers", inline=True) 
+  embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
   await ctx.send(embed=embed)  
 
@@ -171,6 +175,7 @@ async def math(ctx):
   embed.add_field(name="subtract", value="Subtracts two integers. Alternate command is 'sub'", inline=False)
   embed.add_field(name="multiply", value="Multiplies two integers. Alternate command is 'mul'", inline=False)
   embed.add_field(name="divide", value="Divides two integers. Alternate command is 'div'", inline=False)
+  embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
   await ctx.send(embed=embed)
 
