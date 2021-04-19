@@ -121,7 +121,7 @@ async def unmute(ctx, member: discord.Member):
 
 @client.group(pass_context=True, invoke_without_command=True, name='help')
 async def help(ctx):
-  embed=discord.Embed(title="Help", description="Use `m!help {category}` to get more info on each command.') ", color=discord.Colour.blue())
+  embed=discord.Embed(title="Help", description="Use `m!help {category}` to get more info on each command.", color=discord.Colour.blue())
   embed.add_field(name="⚒️ Moderation", value="`m!help moderation`", inline=True) 
   embed.add_field(name="😎 Emotions", value="`m!help emotions`", inline=True)
   embed.add_field(name="🏫 School", value="`m!help school`", inline=True)
