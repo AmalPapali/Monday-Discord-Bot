@@ -126,7 +126,7 @@ async def help(ctx):
   embed.add_field(name="😎 Emotions", value="`m!help emotions`", inline=True)
   embed.add_field(name="🏫 School", value="`m!help school`", inline=True)
   embed.add_field(name="🔢 Math", value="`m!help math`", inline=True)
-  embed.add_field(name="✨ Other", value="`m!help math`", inline=True)
+  embed.add_field(name="✨ Other", value="`m!help other`", inline=True)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
   await ctx.send(embed=embed)
