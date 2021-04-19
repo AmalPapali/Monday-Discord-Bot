@@ -115,6 +115,81 @@ async def unmute(ctx, member: discord.Member):
   await member.remove_roles(role)
   await ctx.send('Member has been unmuted')
 
+
+
+
+
+@client.group(pass_context=True, invoke_without_command=True, name='help')
+async def help(ctx):
+  embed=discord.Embed(title="Help", description="Do m!help {category} for help on each section", color=discord.Colour.blue())
+  embed.add_field(name="⚒️ Moderation", value="m!help moderation", inline=True) 
+  embed.add_field(name="😎 Emotions", value="m!help emotions", inline=True)
+  embed.add_field(name="🏫 School", value="m!help school", inline=True)
+  embed.add_field(name="🔢 Math", value="m!help math", inline=True)
+  embed.add_field(name="✨ Other", value="m!help math", inline=True)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  await ctx.send(embed=embed)
+
+
+@help.command(name='moderation')
+async def moderation(ctx):
+  embed=discord.Embed(title="Moderation Help", description="Prefix is 'm!'. Must have the role 'Hackerman Muted' for the mute commands to work", color=discord.Colour.blue())
+  embed.add_field(name="kick", value="Kicks a user from the server", inline=False) 
+  embed.add_field(name="ban", value="Bans a user from the server", inline=False) 
+  embed.add_field(name="unban", value="Unbans the user. Ex. m!unban Ajay the Awesome#1068 with the full username", inline=False)
+  embed.add_field(name="mute", value="Mutes the user and they cannot talk until the admin unmutes them", inline=False) 
+  embed.add_field(name="unmute", value="Unmutes the user, and they are able to talk", inline=False)  
+  embed.add_field(name="tempmute", value="Mutes the user for a certain amount of time(measured in seconds) do m!tempmute {user} {time}", inline=False)  
+  embed.add_field(name="clear", value="Clears the previous 10 messages from anyone", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  await ctx.send(embed=embed)
+
+@help.command(name='emotions')
+async def emotion(ctx):
+  embed=discord.Embed(title='Emotion Commands', description="Prefix is 'm!'. Emotion commands such as happy, and greedy will appear here", color=discord.Colour.blue())
+  embed.add_field(name="happy", value="Sends a picture of someone happy", inline=True) 
+  embed.add_field(name="greedy", value="Sends a picture of someone greedy", inline=False)
+  embed.add_field(name="think", value="Sends a picture of someone thinking", inline=False)
+  embed.add_field(name="depressed", value="Sends a picture of someone depressed", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
+  await ctx.send(embed=embed)
+
+@help.command(name='school')
+async def school(ctx):
+  embed=discord.Embed(title='School Help', description="Prefix is 'm!'. School commands such as math help will appear here. For the core class help functions to work, you must have the roles 'Math Helper', 'Science Helper', 'Civics and History Helper', and 'ELA Helper'", color=discord.Colour.blue())
+  embed.add_field(name="mathelp", value="Get math help from math helpers", inline=True) 
+  embed.add_field(name="sciencehelp", value="Get science help from science helpers", inline=False) 
+  embed.add_field(name="elahelp", value="Get ela help from ela helpers", inline=False) 
+  embed.add_field(name="historyhelp", value="Get history help from history/civics helpers", inline=True) 
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  await ctx.send(embed=embed)  
+
+@help.command(name='math')
+async def math(ctx):
+  embed=discord.Embed(title='Math Commands', description="Prefix is 'm!'. Math commands such as add and multiply will appear here", color=discord.Colour.blue())
+  embed.add_field(name="add", value="Adds two integers", inline=True) 
+  embed.add_field(name="subtract", value="Subtracts two integers. Alternate command is 'sub'", inline=False)
+  embed.add_field(name="multiply", value="Multiplies two integers. Alternate command is 'mul'", inline=False)
+  embed.add_field(name="divide", value="Divides two integers. Alternate command is 'div'", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
+  await ctx.send(embed=embed)
+
+@help.command(name='other')
+async def other(ctx):
+  embed=discord.Embed(title='Other Commands', description="Prefix is 'm!'. Other commands will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="hello", value="Returns with hello wassup", inline=False) 
+  embed.add_field(name="invite", value="Brings up the link to invite this bot to your different servers", inline=False) 
+  embed.add_field(name="8ball", value="Enter 'm!8ball {question} and get a random answer for it'", inline=False) 
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  await ctx.send(embed=embed)
+
+
+
+
+
+
+
+'''
 @client.command(pass_context=True)
 async def help(ctx):
   embed=discord.Embed(title="Help", description="Prefix is 'm!'. Find different commands and their descriptions. For the core class help functions to work, you must have the roles 'Math Helper', 'Science Helper', 'Civics and History Helper', and 'ELA Helper'", color=discord.Colour.blue())
@@ -162,7 +237,7 @@ async def help4(ctx):
   embed.add_field(name="multiply", value="Multiplies two integers", inline=False)
   embed.add_field(name="divide", value="Divides two integers", inline=False)
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
-  await ctx.send(embed=embed)
+  await ctx.send(embed=embed)'''
 
 @client.command()
 @commands.cooldown(1,300,commands.BucketType.user)
