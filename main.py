@@ -3,6 +3,10 @@ import os
 from discord.utils import get
 from discord.ext import commands
 from discord.ext.commands import Bot
+import random
+import json
+import time
+import asyncio
 
 
 client = discord.Client()
@@ -30,26 +34,53 @@ async def hello(ctx):
   await ctx.send('hello wassup')
 
 @client.command()
+@commands.has_permissions(kick_members=True)
+async def clear(ctx, amount=10):
+  await ctx.channel.purge(limit=amount)
+  await ctx.send(f'Purged {amount} messages')
+  time.sleep(1)
+  await ctx.channel.purge(limit=1)
+
+@client.command()
+@commands.has_permissions(kick_members=True)
+async def tempmute(ctx, member: discord.Member, mute_time : int):
+  role = discord.utils.get(member.guild.roles, name='Hackerman Muted')
+  await member.add_roles(role)
+  await ctx.send(f'{member.mention} has been muted for {mute_time} seconds 😈')
+  await asyncio.sleep(mute_time)
+  await member.remove_roles(role)
+  await ctx.send(f'{member.mention} has been unmuted')
+
+@client.command()
 async def invite(ctx):
   await ctx.send("Link to invite the bot to your different servers: ")
   await ctx.send("https://discord.com/api/oauth2/authorize?client_id=806197421528318003&permissions=8&scope=bot")
+
+@client.command(aliases=['8ball'])
+async def _8ball(ctx, *, question):
+  responses = ["As I see it, yes.", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.",
+  "Don’t count on it.", "It is certain.", "It is decidedly so.", "Most likely.", "My reply is no.", "My sources say no.",
+  "Outlook not so good.", "Outlook good.", "Reply hazy, try again.", "Signs point to yes.", "Very doubtful.", "Without a doubt.",
+  "Yes.", "Yes – definitely.", "You may rely on it."]
+  await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
+
 
 @client.command()
 async def add(ctx, a: int, b: int):
   embed = discord.Embed(title='Sum is', description=a+b, color=discord.Colour.orange())
   await ctx.send(embed=embed)
 
-@client.command()
+@client.command(aliases=['sub'])
 async def subtract(ctx, a:int, b:int):
   embed = discord.Embed(title='Answer is', description=a-b, color=discord.Colour.orange())
   await ctx.send(embed=embed)
 
-@client.command()
+@client.command(aliases=['div'])
 async def divide(ctx, a:int, b:int):
   await ctx.send("Answer is")
   await ctx.send(a/b)
 
-@client.command()
+@client.command(aliases=['mul'])
 async def multiply(ctx, a:int, b:int):
   embed = discord.Embed(title='Product is', description=a*b, color=discord.Colour.orange())
   await ctx.send(embed=embed)
@@ -93,6 +124,7 @@ async def help(ctx):
   embed.add_field(name="elahelp", value="Get ela help from ela helpers", inline=False) 
   embed.add_field(name="historyhelp", value="Get history help from history/civics helpers", inline=True) 
   embed.add_field(name="invite", value="Brings up the link to invite this bot to your different servers", inline=False) 
+  embed.add_field(name="8ball", value="Enter 'm!8ball {question} and get a random answer for it'", inline=False) 
   embed.add_field(name="help2", value="Brings up help command for moderation events and 2 column of commands", inline=False) 
   embed.add_field(name="help3", value="Brings up help command for emotion commands and 3rd column of commands", inline=False) 
   embed.add_field(name="help4", value="Brings up help command for math commands and 4th column of commands", inline=False) 
@@ -108,6 +140,7 @@ async def help2(ctx):
   embed.add_field(name="unban", value="Unbans the user. Ex. m!unban Ajay the Awesome#1068 with the full username", inline=False)
   embed.add_field(name="mute", value="Mutes the user and they cannot talk until the admin unmutes them", inline=False) 
   embed.add_field(name="unmute", value="Unmutes the user, and they are able to talk", inline=False)  
+  embed.add_field(name="clear", value="Clears the previous 10 messages from anyone", inline=False)
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
   await ctx.send(embed=embed)
 
