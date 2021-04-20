@@ -25,11 +25,20 @@ async def on_command_error(ctx, error):
   if isinstance(error, commands.CommandOnCooldown):
     msg = '{:.2f} seconds still left on cooldown'.format(error.retry_after)
     await ctx.send(msg)
+  if isinstance(error, commands.CommandNotFound):
+    embed=discord.Embed(title="Command not found", description="That is not a valid command. Do `m!help` for help", colour=discord.Colour.purple())
+    await ctx.send(embed=embed)
+
 
 
 @client.command()
 async def hello(ctx):
   await ctx.send('hello wassup')
+
+@client.command()
+async def warn(ctx):
+  await ctx.send("You've been warned lol")
+  
 
 @client.command()
 @commands.has_permissions(kick_members=True)
