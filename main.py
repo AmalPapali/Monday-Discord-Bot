@@ -111,7 +111,7 @@ async def depressed(ctx):
 @client.command(pass_context = True)
 @commands.has_permissions(kick_members=True)
 async def mute(ctx, member: discord.Member, reason=None):
-  role = discord.utils.get(member.guild.roles, name='Monday Muted')
+  role = discord.utils.get(member.guild.roles, name='Hackerman Muted')
   await member.add_roles(role)
   embed = discord.Embed(title=f"{member} has been muted", description=f'Reason: {reason}', color=discord.Colour.red())
   await ctx.send(embed=embed)
@@ -119,7 +119,7 @@ async def mute(ctx, member: discord.Member, reason=None):
 @client.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
 async def unmute(ctx, member: discord.Member, reason=None):
-  role = discord.utils.get(member.guild.roles, name='Monday Muted')
+  role = discord.utils.get(member.guild.roles, name='Hackerman Muted')
   await member.remove_roles(role)
   embed = discord.Embed(title=f"{member} has been unmuted", description=f"Reason: {reason}", color=discord.Colour.red())
   await ctx.send(embed=embed)
