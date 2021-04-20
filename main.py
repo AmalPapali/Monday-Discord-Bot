@@ -26,7 +26,7 @@ async def on_command_error(ctx, error):
     msg = '{:.2f} seconds still left on cooldown'.format(error.retry_after)
     await ctx.send(msg)
   if isinstance(error, commands.CommandNotFound):
-    embed=discord.Embed(title="Command not found", description="That is not a valid command. Do `m!help` for help", colour=discord.Colour.purple())
+    embed=discord.Embed(title="Command not found", description=f"{ctx.author.mention} That is not a valid command. Do `m!help` for help", colour=discord.Colour.purple())
     await ctx.send(embed=embed)
 
 
