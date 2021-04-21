@@ -39,6 +39,25 @@ async def hello(ctx):
 async def warn(ctx):
   await ctx.send("You've been warned lol")
   
+@client.command()
+async def curry(ctx):
+  await ctx.send('https://lh3.googleusercontent.com/-xroNHJ_IHc4/YH-dDhDKSJI/AAAAAAAAF7E/MCTUvF8gHScHrn2OwNU71y05pkN0otT2gCK8BGAsYHg/s0/2021-04-20.png?authuser=2')
+
+@client.command()
+async def lebron(ctx):
+  await ctx.send('https://lh3.googleusercontent.com/-XDPGHL5O9UY/YH-dSOyxLAI/AAAAAAAAF7I/3DCmKU1EbEM-ubmESkgErHJ2sfi96CUEQCK8BGAsYHg/s0/2021-04-20.png?authuser=2')
+
+@client.command()
+async def durant(ctx):
+  await ctx.send('https://lh3.googleusercontent.com/-HraLvD49UbM/YH-ddkVMi0I/AAAAAAAAF7M/9f7lmy1Ttl8x-G2EoC7nYaUTNPdU_PIUwCK8BGAsYHg/s0/2021-04-20.png?authuser=2')
+
+@client.command()
+async def irving(ctx):
+  await ctx.send('https://lh3.googleusercontent.com/-XvpMGUo4P9w/YH-dx0BgLjI/AAAAAAAAF7U/De4jRAAtQUs56YSrE1lnOPlZw5iI4vCSACK8BGAsYHg/s0/2021-04-20.png?authuser=2')
+
+@client.command()
+async def mj(ctx):
+  await ctx.send('https://lh3.googleusercontent.com/-4ixrJGL1l6M/YH-d-io4OnI/AAAAAAAAF7Y/Fb55Cj1-BzUvw4E0T4uSuZRBZBdN_ZJSgCK8BGAsYHg/s0/2021-04-20.png?authuser=2')
 
 @client.command()
 @commands.has_permissions(kick_members=True)
@@ -71,6 +90,10 @@ async def _8ball(ctx, *, question):
   "Yes.", "Yes – definitely.", "You may rely on it."]
   await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
 
+@client.command()
+async def roast(ctx, member : discord.Member):
+  roasts = []
+  await ctx.send(f'')
 
 @client.command()
 async def add(ctx, a: int, b: int):
@@ -135,6 +158,7 @@ async def help(ctx):
   embed.add_field(name="😎 Emotions", value="`m!help emotions`", inline=True)
   embed.add_field(name="🏫 School", value="`m!help school`", inline=True)
   embed.add_field(name="🔢 Math", value="`m!help math`", inline=True)
+  embed.add_field(name="🏀 Basketball", value="`m!help basketball`", inline=True)
   embed.add_field(name="✨ Other", value="`m!help other`", inline=True)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
@@ -143,7 +167,7 @@ async def help(ctx):
 
 @help.command(name='moderation')
 async def moderation(ctx):
-  embed=discord.Embed(title="Moderation Help", description="Prefix is 'm!'. Must have the role 'Hackerman Muted' for the mute commands to work", color=discord.Colour.blue())
+  embed=discord.Embed(title="Moderation Help", description="Prefix is `m!`. Must have the role 'Hackerman Muted' for the mute commands to work", color=discord.Colour.blue())
   embed.add_field(name="`m!kick`", value="Kicks a user from the server", inline=False) 
   embed.add_field(name="`m!ban`", value="Bans a user from the server", inline=False) 
   embed.add_field(name="`m!unban`", value="Unbans the user. Ex. m!unban Ajay the Awesome#1068 with the full username", inline=False)
@@ -157,7 +181,7 @@ async def moderation(ctx):
 
 @help.command(name='emotions')
 async def emotion(ctx):
-  embed=discord.Embed(title='Emotion Commands', description="Prefix is 'm!'. Emotion commands such as happy, and greedy will appear here", color=discord.Colour.blue())
+  embed=discord.Embed(title='Emotion Commands', description="Prefix is `m!`. Emotion commands such as happy, and greedy will appear here", color=discord.Colour.blue())
   embed.add_field(name="`m!happy`", value="Sends a picture of someone happy", inline=True) 
   embed.add_field(name="`m!greedy`", value="Sends a picture of someone greedy", inline=False)
   embed.add_field(name="`m!think`", value="Sends a picture of someone thinking", inline=False)
@@ -168,7 +192,7 @@ async def emotion(ctx):
 
 @help.command(name='school')
 async def school(ctx):
-  embed=discord.Embed(title='School Help', description="Prefix is 'm!'. School commands such as math help will appear here. For the core class help functions to work, you must have the roles 'Math Helper', 'Science Helper', 'Civics and History Helper', and 'ELA Helper'", color=discord.Colour.blue())
+  embed=discord.Embed(title='School Help', description="Prefix is `m!`. School commands such as math help will appear here. For the core class help functions to work, you must have the roles 'Math Helper', 'Science Helper', 'Civics and History Helper', and 'ELA Helper'", color=discord.Colour.blue())
   embed.add_field(name="`m!mathelp`", value="Get math help from math helpers", inline=True) 
   embed.add_field(name="`m!sciencehelp`", value="Get science help from science helpers", inline=False) 
   embed.add_field(name="`m!elahelp`", value="Get ela help from ela helpers", inline=False) 
@@ -179,7 +203,7 @@ async def school(ctx):
 
 @help.command(name='math')
 async def math(ctx):
-  embed=discord.Embed(title='Math Commands', description="Prefix is 'm!'. Math commands such as add and multiply will appear here", color=discord.Colour.blue())
+  embed=discord.Embed(title='Math Commands', description="Prefix is `m!`. Math commands such as add and multiply will appear here", color=discord.Colour.blue())
   embed.add_field(name="`m!add`", value="Adds two integers", inline=True) 
   embed.add_field(name="`m!subtract`", value="Subtracts two integers. Alternate command is 'sub'", inline=False)
   embed.add_field(name="`m!multiply`", value="Multiplies two integers. Alternate command is 'mul'", inline=False)
@@ -190,7 +214,7 @@ async def math(ctx):
 
 @help.command(name='other')
 async def other(ctx):
-  embed=discord.Embed(title='Other Commands', description="Prefix is 'm!'. Other commands will appear here.", color=discord.Colour.blue())
+  embed=discord.Embed(title='Other Commands', description="Prefix is `m!`. Other commands will appear here.", color=discord.Colour.blue())
   embed.add_field(name="`m!hello`", value="Returns with hello wassup", inline=False) 
   embed.add_field(name="`m!invite`", value="Brings up the link to invite this bot to your different servers", inline=False) 
   embed.add_field(name="`m!8ball`", value="Enter 'm!8ball {question} and get a random answer for it'", inline=False) 
@@ -198,7 +222,16 @@ async def other(ctx):
   await ctx.send(embed=embed)
 
 
-
+@help.command(name='basketball')
+async def basketball(ctx):
+  embed=discord.Embed(title='Basketball Commands', description="Prefix is `m!`. Basketball commands will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!curry`", value="Returns with Stephen Curry's picture", inline=False)
+  embed.add_field(name="`m!lebron`", value="Returns with Lebron's picture", inline=False)
+  embed.add_field(name="`m!irving`", value="Returns with Kyrie Irving's picture", inline=False)
+  embed.add_field(name="`m!mj`", value="Returns with Michael Jordan's picture", inline=False)
+  embed.add_field(name="`m!durant`", value="Returns with Kevin Durant's picture", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  await ctx.send(embed=embed)
 
 
 
