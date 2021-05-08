@@ -7,7 +7,7 @@ import random
 import json
 import time
 import asyncio
-
+from discord import Permissions
 
 client = discord.Client()
 client = commands.Bot(command_prefix = 'm!')
@@ -30,7 +30,6 @@ async def on_command_error(ctx, error):
     await ctx.send(embed=embed)
 
 
-
 @client.command()
 async def hello(ctx):
   await ctx.send('hello wassup')
@@ -38,7 +37,58 @@ async def hello(ctx):
 @client.command()
 async def warn(ctx):
   await ctx.send("You've been warned lol")
-  
+
+@client.command(aliases=["ms"])
+async def ping(ctx): 
+    await ctx.send(f"My ping is: {round(client.latency * 1000)} ms.")
+
+@client.command()
+async def qotd(ctx):
+  await ctx.author.send("QOTD for today:")
+  await ctx.author.send("||If you have only one match and you walked into a room where there was an oil burner, a kerosene lamp, and a wood burning stove, which one would you light first? - This is another easy common sense question, will move on from Monday||")
+
+@client.command()
+async def suggest(ctx, *, suggestion):
+  await ctx.channel.purge(limit=1)
+  guild_name = ctx.guild
+  channel = client.get_channel(825117309941186560)
+  #description = f"{ctx.message.author.mention} has suggested this suggestion."
+  #value = f"{suggestion}"
+  #author = ctx.message.author
+  #embed=discord.Embed(title="Suggestion", description=f"Suggestion from {author}", color=discord.Colour.blue())
+  #embed.add_field(name= "", value = "value", inline=True)
+  #await channel.send(embed=embed)
+  #sent = ""
+  sent = await channel.send(f"This suggestion was made by {ctx.message.author}\nSuggestion: {suggestion}")
+  emoji = '\N{THUMBS UP SIGN}'
+  await sent.add_reaction(emoji)
+  await sent.add_reaction('👎')
+  #await sent.add_reaction("⬆️")
+  #await sent.add_reaction("⬇️")
+
+
+
+@client.command()
+@commands.has_permissions(ban_members=True)
+async def potdannounce(ctx, member: discord.Member, *, points):
+  await ctx.channel.purge(limit=1)
+  channel = client.get_channel(837700765203038269)
+  message = (f'{member.mention} has solved the POTD and has earned {points} points')
+  await channel.send(message)
+
+@client.command()
+@commands.has_permissions(ban_members=True)
+async def qotdannounce(ctx, member: discord.Member, *, points):
+  await ctx.channel.purge(limit=1)
+  channel = client.get_channel(837700765203038269)
+  message = (f'{member.mention} has solved the QOTD and has earned {points} points')
+  await channel.send(message)
+
+@client.command()
+async def potd(ctx):
+  await ctx.author.send("POTD for today")
+  await ctx.author.send("https://cdn.discordapp.com/attachments/836410256992501780/837696991596249148/unknown.png")
+
 @client.command()
 async def curry(ctx):
   await ctx.send('https://lh3.googleusercontent.com/-xroNHJ_IHc4/YH-dDhDKSJI/AAAAAAAAF7E/MCTUvF8gHScHrn2OwNU71y05pkN0otT2gCK8BGAsYHg/s0/2021-04-20.png?authuser=2')
@@ -69,10 +119,10 @@ async def clear(ctx, amount=10):
 
 @client.command()
 @commands.has_permissions(kick_members=True)
-async def tempmute(ctx, member: discord.Member, mute_time : int):
+async def tempmute(ctx, member: discord.Member, mute_time : int, *, reason=None):
   role = discord.utils.get(member.guild.roles, name='Hackerman Muted')
   await member.add_roles(role)
-  await ctx.send(f'{member.mention} has been muted for {mute_time} seconds 😈')
+  await ctx.send(f'{member.mention} has been muted for {mute_time} seconds 😈 Reason: {reason}')
   await asyncio.sleep(mute_time)
   await member.remove_roles(role)
   await ctx.send(f'{member.mention} has been unmuted')
@@ -90,10 +140,10 @@ async def _8ball(ctx, *, question):
   "Yes.", "Yes – definitely.", "You may rely on it."]
   await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
 
-@client.command()
+'''@client.command()
 async def roast(ctx, member : discord.Member):
   roasts = []
-  await ctx.send(f'')
+  await ctx.send(f'')'''
 
 @client.command()
 async def add(ctx, a: int, b: int):
@@ -133,7 +183,7 @@ async def depressed(ctx):
 
 @client.command(pass_context = True)
 @commands.has_permissions(kick_members=True)
-async def mute(ctx, member: discord.Member, reason=None):
+async def mute(ctx, member: discord.Member, *, reason=None):
   role = discord.utils.get(member.guild.roles, name='Hackerman Muted')
   await member.add_roles(role)
   embed = discord.Embed(title=f"{member} has been muted", description=f'Reason: {reason}', color=discord.Colour.red())
@@ -141,14 +191,11 @@ async def mute(ctx, member: discord.Member, reason=None):
 
 @client.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
-async def unmute(ctx, member: discord.Member, reason=None):
+async def unmute(ctx, member: discord.Member, *,reason=None):
   role = discord.utils.get(member.guild.roles, name='Hackerman Muted')
   await member.remove_roles(role)
   embed = discord.Embed(title=f"{member} has been unmuted", description=f"Reason: {reason}", color=discord.Colour.red())
   await ctx.send(embed=embed)
-
-
-
 
 
 @client.group(pass_context=True, invoke_without_command=True, name='help')
@@ -324,6 +371,9 @@ async def ban(ctx, member : discord.Member, *, reason=None):
   await member.ban(reason=reason)
   await ctx.send(embed=embed)
   await ctx.send(f'User {member.mention} has been banned')
+
+
+
 
 @client.command()
 async def unban(ctx, *, member):
