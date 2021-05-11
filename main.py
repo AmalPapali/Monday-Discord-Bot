@@ -8,6 +8,8 @@ import json
 import time
 import asyncio
 from discord import Permissions
+from discord import DMChannel
+from discord.ext import tasks
 
 client = discord.Client()
 client = commands.Bot(command_prefix = 'm!')
@@ -68,6 +70,26 @@ async def suggest(ctx, *, suggestion):
 
 
 
+'''@client.command()
+async def warnban(ctx, member: discord.Member, *, reason):
+  mutedRole = await ctx.guild.create_role(name="Muted")
+  for channel in ctx.guild.channels:
+    await channel.set_permissions(mutedRole, speak=False, send_messages=False, read_messages=False)
+  await member.add_roles(mutedRole, reason=reason)'''
+
+@client.command()
+async def approve(ctx, member: discord.Member, *, suggestion):
+  await ctx.channel.purge(limit=1)
+  channel = client.get_channel(825117309941186560)
+  await channel.send(f"{member.mention} your suggestion: {suggestion} has been approved.\nPlease wait for it to be implemented")
+
+@client.command()
+async def implemented(ctx, member: discord.Member, *, suggestion):
+  await ctx.channel.purge(limit=1)
+  channel = client.get_channel(825117309941186560)
+  await channel.send(f"{member.mention} your suggestion: {suggestion} has been implemented.")
+
+
 @client.command()
 @commands.has_permissions(ban_members=True)
 async def potdannounce(ctx, member: discord.Member, *, points):
@@ -126,6 +148,24 @@ async def tempmute(ctx, member: discord.Member, mute_time : int, *, reason=None)
   await asyncio.sleep(mute_time)
   await member.remove_roles(role)
   await ctx.send(f'{member.mention} has been unmuted')
+
+@client.command()
+@commands.has_permissions(ban_members=True)
+async def banish(ctx, member: discord.Member, *, reason=None):
+  role = discord.utils.get(member.guild.roles, name='BANISHED')
+  await member.add_roles(role)
+  channel = client.get_channel(841004263693746247)
+  await channel.send(f"{member.mention} WELCOME TO THE BANISHED CLUB. All idiots such as you will end up here\nThe reason for this was: {reason}")
+
+
+@client.command()
+@commands.has_permissions(ban_members=True)
+async def unbanish(ctx, member: discord.Member, *, reason=None):
+  role = discord.utils.get(member.guild.roles, name='BANISHED')
+  channel = client.get_channel(841004263693746247)
+  await channel.send(f"{member.mention} Good Job, you have been unbanished")
+  time.sleep(5)
+  await member.remove_roles(role)
 
 @client.command()
 async def invite(ctx):
@@ -372,9 +412,23 @@ async def ban(ctx, member : discord.Member, *, reason=None):
   await ctx.send(embed=embed)
   await ctx.send(f'User {member.mention} has been banned')
 
+@client.command()
+async def tempban(ctx, member: discord.Member, time:int, *, reason=None):
+  username = client.get_user(member)
+  user = await client.fetch_user(username)
+  await DMChannel.send(username, f"You will be unbanned in {time} seconds")
+  await DMChannel.send(username, "https://discord.gg/u7ZbF3qaQX")
+  await member.ban(reason=reason)
+  await ctx.send(f'User {member.mention} has been banned')
+  await asyncio.sleep(time)
+  banned_users = await ctx.guild.bans()
+  for ban_entry in banned_users:
+    user = ban_entry.user
+  await ctx.guild.unban(user)
+  await ctx.send(f"Unbanned {user.mention}")
+  return
 
-
-
+  
 @client.command()
 async def unban(ctx, *, member):
   banned_users = await ctx.guild.bans()
@@ -387,7 +441,8 @@ async def unban(ctx, *, member):
       await ctx.guild.unban(user)
       await ctx.send(f"Unbanned {user.mention}")
       return
-
+  await ctx.send(f"Unbanned {user.mention}")
+  
 
 
 
