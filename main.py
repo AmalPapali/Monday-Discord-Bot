@@ -207,7 +207,7 @@ async def multiply(ctx, a:int, b:int):
 
 @client.command()
 async def happy(ctx):
-  await ctx.send('https://lh3.googleusercontent.com/-TDOZH1jyfrk/YHUKL5QbYRI/AAAAAAAAF5I/SGbTLDBvPy43laY2-wLDMZ8o1hvoztOPQCK8BGAsYHg/s0/2021-04-12.png?authuser=1')
+  await ctx.send('w')
 
 @client.command()
 async def greedy(ctx):
@@ -230,6 +230,58 @@ async def mute(ctx, member: discord.Member, *, reason=None):
   await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
+async def join(ctx):
+  channelid = client.get_channel(836327317994209320)
+  channel = ctx.message.author.voice.channel
+  await channel.connect()
+  await channelid.send("I have joined the voice channel")
+
+@client.command(pass_context=True)
+async def leave(ctx):
+  if (ctx.voice_client): # If the bot is in a voice channel 
+    await ctx.guild.voice_client.disconnect()
+    channelid = client.get_channel(836327317994209320)
+    await channelid.send("I have left the voice channel")
+
+@client.command()
+async def youtube(ctx, *, search):
+  standard = 'https://www.youtube.com/results?search_query='
+  final = standard + search
+  await ctx.send("This is what I have found:")
+  await ctx.send(final)
+
+@client.command()
+async def imgur(ctx, *, search):
+  standard = 'https://imgur.com/search?q='
+  final = standard + search
+  await ctx.send("This what I have found:")
+  await ctx.send(final)
+
+@client.command()
+async def size(ctx):
+  guild = ctx.guild
+  await ctx.send(f"This server consists of: {ctx.guild.member_count} members") 
+
+@client.command()
+async def serverid(ctx):
+  id = ctx.message.guild.id
+  await ctx.send(f"Server ID: {id}")
+
+
+@client.command()
+async def serverinfo(ctx):
+  id = ctx.message.guild.id
+  guild = ctx.guild
+  await ctx.send(f'Server Name: {guild.name}')
+  await ctx.send(f"Server ID: {id}")
+  await ctx.send(f"Server Member Count: {ctx.guild.member_count} members") 
+
+
+
+
+
+
+@client.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
 async def unmute(ctx, member: discord.Member, *,reason=None):
   role = discord.utils.get(member.guild.roles, name='Hackerman Muted')
@@ -246,6 +298,9 @@ async def help(ctx):
   embed.add_field(name="🏫 School", value="`m!help school`", inline=True)
   embed.add_field(name="🔢 Math", value="`m!help math`", inline=True)
   embed.add_field(name="🏀 Basketball", value="`m!help basketball`", inline=True)
+  embed.add_field(name="⚡️ Server Related", value="`m!help related`", inline=True)
+  embed.add_field(name="🎶 Music", value="`m!help music`", inline=True)
+  embed.add_field(name="🔎 Search", value="`m!help search`", inline=True)
   embed.add_field(name="✨ Other", value="`m!help other`", inline=True)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
@@ -258,6 +313,9 @@ async def moderation(ctx):
   embed.add_field(name="`m!kick`", value="Kicks a user from the server", inline=False) 
   embed.add_field(name="`m!ban`", value="Bans a user from the server", inline=False) 
   embed.add_field(name="`m!unban`", value="Unbans the user. Ex. m!unban Ajay the Awesome#1068 with the full username", inline=False)
+  embed.add_field(name="`m!tempban`", value="Bans a user from the server for a certain amount of seconds", inline=False) 
+  embed.add_field(name="`m!banish`", value="Banishes a user from the server and sends them to the ban redemption channel", inline=False) 
+  embed.add_field(name="`m!unbanish`", value="Unbanishes a user from the server and allows them to access the rest of the server", inline=False) 
   embed.add_field(name="`m!mute`", value="Mutes the user and they cannot talk until the admin unmutes them", inline=False) 
   embed.add_field(name="`m!unmute`", value="Unmutes the user, and they are able to talk", inline=False)  
   embed.add_field(name="`m!tempmute`", value="Mutes the user for a certain amount of time(measured in seconds) do m!tempmute {user} {time}", inline=False)  
@@ -297,6 +355,29 @@ async def math(ctx):
   embed.add_field(name="`m!divide`", value="Divides two integers. Alternate command is 'div'", inline=False)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
+  await ctx.send(embed=embed)
+
+@help.command(name="related")
+async def related(ctx):
+  embed=discord.Embed(title='Server Related Helpful Commands', description="Prefix is `m!`. Server commands such as suggestion features will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!suggest {suggestion}`", value="Posts your suggestion in the suggestion channel for others to vote on", inline=False) 
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  await ctx.send(embed=embed)
+
+@help.command(name='music')
+async def music(ctx):
+  embed=discord.Embed(title='Music Commands', description="Prefix is `m!`. Music commands such as joining vc's will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!join`", value="Joins the vc that the author is in", inline=False)
+  embed.add_field(name="`m!leave`", value="Leaves the vc", inline=False) 
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  await ctx.send(embed=embed)
+
+@help.command(name='search')
+async def search(ctx):
+  embed=discord.Embed(title='Search Commands', description="Prefix is `m!`. Music commands such as searching youtube will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!youtube`", value="Searches youtube", inline=False)
+  embed.add_field(name="`m!imgur`", value="Searches imgur", inline=False) 
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
   await ctx.send(embed=embed)
 
 @help.command(name='other')
