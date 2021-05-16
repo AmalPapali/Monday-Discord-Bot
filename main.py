@@ -10,6 +10,8 @@ import asyncio
 from discord import Permissions
 from discord import DMChannel
 from discord.ext import tasks
+from datetime import date
+
 
 client = discord.Client()
 client = commands.Bot(command_prefix = 'm!')
@@ -30,6 +32,34 @@ async def on_command_error(ctx, error):
   if isinstance(error, commands.CommandNotFound):
     embed=discord.Embed(title="Command not found", description=f"{ctx.author.mention} That is not a valid command. Do `m!help` for help", colour=discord.Colour.purple())
     await ctx.send(embed=embed)
+
+
+@client.command()
+async def guess(ctx, number):
+  number2guess = random.randint(0, 100)
+  number = int(number)
+  if number > number2guess:
+    await ctx.send(f"{ctx.message.author} You were too high\nThe correct number was {number2guess}")
+  elif number == number2guess:
+    await ctx.send(f"{ctx.message.author} CORRECT. GREAT JOB\nThe number was indeed {number2guess}")
+
+  elif number < number2guess:
+    await ctx.send(f"{ctx.message.author} You were too low\nThe correct number was {number2guess}")
+  else: 
+    await ctx.send(f"{ctx.message.author} I didn't understand your response\nThe correct number was {number2guess}")
+
+@client.command()
+async def roll(ctx):
+  number = random.randint(1, 6)
+  await ctx.send(f"{number} was rolled")
+
+@client.command()
+async def flip(ctx):
+  number = random.randint(1, 2)
+  if number == 1:
+    await ctx.send("Heads was flipped")
+  if number == 2: 
+    await ctx.send("Tails was flipped")
 
 
 @client.command()
@@ -130,6 +160,14 @@ async def irving(ctx):
 @client.command()
 async def mj(ctx):
   await ctx.send('https://lh3.googleusercontent.com/-4ixrJGL1l6M/YH-d-io4OnI/AAAAAAAAF7Y/Fb55Cj1-BzUvw4E0T4uSuZRBZBdN_ZJSgCK8BGAsYHg/s0/2021-04-20.png?authuser=2')
+
+@client.command()
+async def bruhmoment(ctx):
+  await ctx.send("https://lh3.googleusercontent.com/-GU4s-OE60I0/YJ1vBA1Xi2I/AAAAAAAAAGM/7vHK_j_3qfYXqmgIrycjnn016uRNYpAHQCK8BGAsYHg/s0/2021-05-13.png?authuser=0")
+
+@client.command()
+async def help_server(ctx):
+  await ctx.send("")
 
 @client.command()
 @commands.has_permissions(kick_members=True)
@@ -268,6 +306,7 @@ async def serverid(ctx):
   await ctx.send(f"Server ID: {id}")
 
 
+
 @client.command()
 async def serverinfo(ctx):
   id = ctx.message.guild.id
@@ -278,7 +317,24 @@ async def serverinfo(ctx):
 
 
 
+@client.command()
+@commands.has_permissions(kick_members=True)
+async def givept(ctx, member: discord.Member):
+  channel = client.get_channel(840986859856855040)
+  await channel.send(f"Congratulations on showing awesome behavior {member.mention}, {ctx.message.author} has recognized your awesome behavior")
 
+@client.command()
+async def report(ctx, member: discord.Member, *, reason):
+  await ctx.channel.purge(limit=1)
+  channel = client.get_channel(834469536052150352)
+  await channel.send(f"Reporter: {ctx.message.author}\nReporting: {member}\nReason: {reason}")
+
+@client.command()
+@commands.has_permissions(kick_members=True)
+async def staffreport(ctx, member: discord.Member, *, reason):
+  await ctx.channel.purge(limit=1)
+  channel = client.get_channel(835678385639915540)
+  await channel.send(f"Reporter: {ctx.message.author}\nReporting: {member}\nReason: {reason}")
 
 
 @client.command(pass_context=True)
@@ -297,10 +353,13 @@ async def help(ctx):
   embed.add_field(name="😎 Emotions", value="`m!help emotions`", inline=True)
   embed.add_field(name="🏫 School", value="`m!help school`", inline=True)
   embed.add_field(name="🔢 Math", value="`m!help math`", inline=True)
+  embed.add_field(name="🧮 Math Fun", value="`m!help mathfun`", inline=True)
   embed.add_field(name="🏀 Basketball", value="`m!help basketball`", inline=True)
   embed.add_field(name="⚡️ Server Related", value="`m!help related`", inline=True)
   embed.add_field(name="🎶 Music", value="`m!help music`", inline=True)
   embed.add_field(name="🔎 Search", value="`m!help search`", inline=True)
+  embed.add_field(name="🎮 Games", value="`m!help games`", inline=True)
+  embed.add_field(name="📝 Reports", value="`m!help reports`", inline=True)
   embed.add_field(name="✨ Other", value="`m!help other`", inline=True)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
@@ -380,6 +439,21 @@ async def search(ctx):
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
   await ctx.send(embed=embed)
 
+@help.command(name='games')
+async def games(ctx):
+  embed=discord.Embed(title='Game Commands', description="Prefix is `m!`. Game commands will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!givept`", value="Gives the user a rep point for displaying outstanding behavior", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  await ctx.send(embed=embed)
+
+@help.command(name='reports')
+async def reports(ctx):
+  embed=discord.Embed(title='Report Commands', description="Prefix is `m!`. Report commands will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!report`", value="Reports a user and allows others to vote if it is justified and the punishment", inline=False)
+  embed.add_field(name="`m!staffreport`", value="Reports a user and allows others to vote if it is justified and the punishment", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  await ctx.send(embed=embed)
+
 @help.command(name='other')
 async def other(ctx):
   embed=discord.Embed(title='Other Commands', description="Prefix is `m!`. Other commands will appear here.", color=discord.Colour.blue())
@@ -389,6 +463,14 @@ async def other(ctx):
   embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
   await ctx.send(embed=embed)
 
+@help.command(name='mathfun')
+async def mathfun(ctx):
+  embed=discord.Embed(title='Math Game Commands', description="Prefix is `m!`. Fun math commands will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!guess`", value="Guess a random number between 1 and 100", inline=False) 
+  embed.add_field(name="`m!roll`", value="Rolls a 6 sided die", inline=False)
+  embed.add_field(name="`m!flip`", value="Flips a coin", inline=False)
+  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  await ctx.send(embed=embed)
 
 @help.command(name='basketball')
 async def basketball(ctx):
