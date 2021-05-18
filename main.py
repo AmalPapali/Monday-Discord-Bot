@@ -34,7 +34,7 @@ async def on_command_error(ctx, error):
     embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
     await ctx.send(embed=embed)
 
-@client.event
+'''@client.event
 async def on_message(message):
   if message.content == 'math link':
     await message.channel.send("https://scps.webex.com/meet/milanatz")
@@ -45,8 +45,8 @@ async def on_message(message):
   if message.content == 'wtp link':
     await message.channel.send("Google Meet link: https://meet.google.com/umf-hjnc-fun\nZoom link: https://us02web.zoom.us/j/3393605376?pwd=d1IxQnBwVXlpTU1tOEYxSVlQenRiQT09")
   if message.content == 'testing schedule':
-    await message.channel.send("https://lh3.googleusercontent.com/-f_E7PniU25w/YI87HuyDmvI/AAAAAAAAF-U/48p9JCtEgH4PEH-_6sMoUVL0d2FSHLkxgCK8BGAsYHg/s0/2021-05-02.png?authuser=4")
-    
+    await message.channel.send("https://lh3.googleusercontent.com/-f_E7PniU25w/YI87HuyDmvI/AAAAAAAAF-U/48p9JCtEgH4PEH-_6sMoUVL0d2FSHLkxgCK8BGAsYHg/s0/2021-05-02.png?authuser=4")'''
+
 
 @client.command()
 async def guess(ctx, number):
