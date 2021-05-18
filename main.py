@@ -31,8 +31,22 @@ async def on_command_error(ctx, error):
     await ctx.send(msg)
   if isinstance(error, commands.CommandNotFound):
     embed=discord.Embed(title="Command not found", description=f"{ctx.author.mention} That is not a valid command. Do `m!help` for help", colour=discord.Colour.purple())
+    embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
     await ctx.send(embed=embed)
 
+@client.event
+async def on_message(message):
+  if message.content == 'math link':
+    await message.channel.send("https://scps.webex.com/meet/milanatz")
+  if message.content == 'science link':
+    await message.channel.send("https://scps.webex.com/meet/vannuybs")
+  if message.content == 'marrero spanish link':
+    await message.channel.send("https://scps.webex.com/webappng/sites/scps/meeting/download/ec398b13cb11c14d1de05c4c707ee2b0")
+  if message.content == 'wtp link':
+    await message.channel.send("Google Meet link: https://meet.google.com/umf-hjnc-fun\nZoom link: https://us02web.zoom.us/j/3393605376?pwd=d1IxQnBwVXlpTU1tOEYxSVlQenRiQT09")
+  if message.content == 'testing schedule':
+    await message.channel.send("https://lh3.googleusercontent.com/-f_E7PniU25w/YI87HuyDmvI/AAAAAAAAF-U/48p9JCtEgH4PEH-_6sMoUVL0d2FSHLkxgCK8BGAsYHg/s0/2021-05-02.png?authuser=4")
+    
 
 @client.command()
 async def guess(ctx, number):
@@ -61,6 +75,42 @@ async def flip(ctx):
   if number == 2: 
     await ctx.send("Tails was flipped")
 
+@client.command(aliases=["1min"])
+async def mino(ctx):
+  await ctx.send("The timer has started")
+  await asyncio.sleep(60)
+  await ctx.send("The timer is finished")
+
+@client.command(aliases=["3min"])
+async def mint(ctx):
+  await ctx.send("The timer has started")
+  await asyncio.sleep(180)
+  await ctx.send("The timer is finished")
+
+@client.command(aliases=["5min"])
+async def minf(ctx):
+  await ctx.send("The timer has started")
+  await asyncio.sleep(300)
+  await ctx.send("The timer is finished")
+
+@client.command(aliases=["30min"])
+async def minth(ctx):
+  await ctx.send("The timer has started")
+  await asyncio.sleep(1800)
+  await ctx.send("The timer is finished")
+
+@client.command(aliases=["1hr"])
+async def minohr(ctx):
+  await ctx.send("The timer has started")
+  await asyncio.sleep(3600)
+  await ctx.send("The timer is finished")
+
+@client.command()
+async def mins(ctx, amount):
+  amount = amount*60
+  await ctx.send("The timer has started")
+  await asyncio.sleep(amount)
+  await ctx.send("The timer is finished")
 
 @client.command()
 async def hello(ctx):
@@ -91,7 +141,7 @@ async def suggest(ctx, *, suggestion):
   #embed.add_field(name= "", value = "value", inline=True)
   #await channel.send(embed=embed)
   #sent = ""
-  sent = await channel.send(f"This suggestion was made by {ctx.message.author}\nSuggestion: {suggestion}")
+  sent = await channel.send(f"This suggestion was made by **{ctx.message.author}**\nSuggestion: **{suggestion}**")
   emoji = '\N{THUMBS UP SIGN}'
   await sent.add_reaction(emoji)
   await sent.add_reaction('👎')
@@ -165,9 +215,9 @@ async def mj(ctx):
 async def bruhmoment(ctx):
   await ctx.send("https://lh3.googleusercontent.com/-GU4s-OE60I0/YJ1vBA1Xi2I/AAAAAAAAAGM/7vHK_j_3qfYXqmgIrycjnn016uRNYpAHQCK8BGAsYHg/s0/2021-05-13.png?authuser=0")
 
-@client.command()
+@client.command(aliases=['server', 'helpserver'])
 async def help_server(ctx):
-  await ctx.send("")
+  await ctx.send("https://discord.gg/eM9SHEeW2f")
 
 @client.command()
 @commands.has_permissions(kick_members=True)
@@ -316,7 +366,9 @@ async def serverinfo(ctx):
   await ctx.send(f"Server Member Count: {ctx.guild.member_count} members") 
 
 
-
+#@client.command()
+#async def spanish_marrero_link(ctx):
+  
 @client.command()
 @commands.has_permissions(kick_members=True)
 async def givept(ctx, member: discord.Member):
@@ -335,6 +387,30 @@ async def staffreport(ctx, member: discord.Member, *, reason):
   await ctx.channel.purge(limit=1)
   channel = client.get_channel(835678385639915540)
   await channel.send(f"Reporter: {ctx.message.author}\nReporting: {member}\nReason: {reason}")
+
+
+@client.command()
+async def rps(ctx, move):
+  possible_actions = ["rock", "paper", "scissors"]
+  computer_action = random.choice(possible_actions)
+  if move == computer_action:
+    await ctx.send(f"Both players selected {move}. It's a tie!")
+  elif move == "rock":
+    if computer_action == "scissors":
+        await ctx.send("Rock smashes scissors! You win!")
+    else:
+        await ctx.send("Paper covers rock! You lose.")
+  elif move == "paper":
+    if computer_action == "rock":
+        await ctx.send("Paper covers rock! You win!")
+    else:
+        await ctx.send("Scissors cuts paper! You lose.")
+  elif move == "scissors":
+    if computer_action == "paper":
+        await ctx.send("Scissors cuts paper! You win!")
+    else:
+        await ctx.send("Rock smashes scissors! You lose.")
+
 
 
 @client.command(pass_context=True)
@@ -359,12 +435,33 @@ async def help(ctx):
   embed.add_field(name="🎶 Music", value="`m!help music`", inline=True)
   embed.add_field(name="🔎 Search", value="`m!help search`", inline=True)
   embed.add_field(name="🎮 Games", value="`m!help games`", inline=True)
+  embed.add_field(name="⏰ Timers", value="`m!help timers`", inline=True)
+  embed.add_field(name="🎉 Birthdays", value="`m!help birthdays`", inline=True)
+  embed.add_field(name="🪜 Levels", value="`m!help levels`", inline=True)
   embed.add_field(name="📝 Reports", value="`m!help reports`", inline=True)
+  embed.add_field(name="⌨️ Links", value="`m!help links`", inline=True)
   embed.add_field(name="✨ Other", value="`m!help other`", inline=True)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
   await ctx.send(embed=embed)
 
+@help.command(name='birthdays')
+async def birthdays(ctx):
+  embed=discord.Embed(title='Birthday Commands', description="Prefix is `m!`. Birthday commands will appear here", color=discord.Colour.blue())
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")  
+  await ctx.send(embed=embed)
+
+@help.command(name='links')
+async def links(ctx):
+  embed=discord.Embed(title='Class Link Commands', description="Prefix is `m!`. Class link commands will appear here", color=discord.Colour.blue())
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")  
+  await ctx.send(embed=embed)
+
+@help.command(name='levels')
+async def levels(ctx):
+  embed=discord.Embed(title='Level Commands', description="Prefix is `m!`. Level commands will appear here", color=discord.Colour.blue())
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")  
+  await ctx.send(embed=embed)
 
 @help.command(name='moderation')
 async def moderation(ctx):
@@ -379,7 +476,7 @@ async def moderation(ctx):
   embed.add_field(name="`m!unmute`", value="Unmutes the user, and they are able to talk", inline=False)  
   embed.add_field(name="`m!tempmute`", value="Mutes the user for a certain amount of time(measured in seconds) do m!tempmute {user} {time}", inline=False)  
   embed.add_field(name="`m!clear`", value="Clears the previous 10 messages from anyone", inline=False)
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
   await ctx.send(embed=embed)
 
@@ -391,7 +488,7 @@ async def emotion(ctx):
   embed.add_field(name="`m!think`", value="Sends a picture of someone thinking", inline=False)
   embed.add_field(name="`m!depressed`", value="Sends a picture of someone depressed", inline=False)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")  
   await ctx.send(embed=embed)
 
 @help.command(name='school')
@@ -402,7 +499,7 @@ async def school(ctx):
   embed.add_field(name="`m!elahelp`", value="Get ela help from ela helpers", inline=False) 
   embed.add_field(name="`m!historyhelp`", value="Get history help from history/civics helpers", inline=True) 
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
   await ctx.send(embed=embed)  
 
 @help.command(name='math')
@@ -413,14 +510,14 @@ async def math(ctx):
   embed.add_field(name="`m!multiply`", value="Multiplies two integers. Alternate command is 'mul'", inline=False)
   embed.add_field(name="`m!divide`", value="Divides two integers. Alternate command is 'div'", inline=False)
   embed.set_thumbnail(url=str(client.get_user(806197421528318003).avatar_url))
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")  
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")  
   await ctx.send(embed=embed)
 
 @help.command(name="related")
 async def related(ctx):
   embed=discord.Embed(title='Server Related Helpful Commands', description="Prefix is `m!`. Server commands such as suggestion features will appear here.", color=discord.Colour.blue())
   embed.add_field(name="`m!suggest {suggestion}`", value="Posts your suggestion in the suggestion channel for others to vote on", inline=False) 
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056") 
   await ctx.send(embed=embed)
 
 @help.command(name='music')
@@ -428,7 +525,19 @@ async def music(ctx):
   embed=discord.Embed(title='Music Commands', description="Prefix is `m!`. Music commands such as joining vc's will appear here.", color=discord.Colour.blue())
   embed.add_field(name="`m!join`", value="Joins the vc that the author is in", inline=False)
   embed.add_field(name="`m!leave`", value="Leaves the vc", inline=False) 
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056") 
+  await ctx.send(embed=embed)
+
+@help.command(name='timers')
+async def timers(ctx):
+  embed=discord.Embed(title='Music Commands', description="Prefix is `m!`. Timer commands such as 1 min timer will appear here.", color=discord.Colour.blue())
+  embed.add_field(name="`m!1min`", value="1 minute timer", inline=False)
+  embed.add_field(name="`m!3min`", value="3 minute timer", inline=False)
+  embed.add_field(name="`m!5min`", value="5 minute timer", inline=False)
+  embed.add_field(name="`m!30min`", value="30 minute timer", inline=False)
+  embed.add_field(name="`m!1hr`", value="1 hour timer", inline=False)
+  embed.add_field(name="`m!mins {time}`", value="A timer for {time} minutes", inline=False)
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056") 
   await ctx.send(embed=embed)
 
 @help.command(name='search')
@@ -436,14 +545,14 @@ async def search(ctx):
   embed=discord.Embed(title='Search Commands', description="Prefix is `m!`. Music commands such as searching youtube will appear here.", color=discord.Colour.blue())
   embed.add_field(name="`m!youtube`", value="Searches youtube", inline=False)
   embed.add_field(name="`m!imgur`", value="Searches imgur", inline=False) 
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056") 
   await ctx.send(embed=embed)
 
 @help.command(name='games')
 async def games(ctx):
   embed=discord.Embed(title='Game Commands', description="Prefix is `m!`. Game commands will appear here.", color=discord.Colour.blue())
   embed.add_field(name="`m!givept`", value="Gives the user a rep point for displaying outstanding behavior", inline=False)
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056") 
   await ctx.send(embed=embed)
 
 @help.command(name='reports')
@@ -451,7 +560,7 @@ async def reports(ctx):
   embed=discord.Embed(title='Report Commands', description="Prefix is `m!`. Report commands will appear here.", color=discord.Colour.blue())
   embed.add_field(name="`m!report`", value="Reports a user and allows others to vote if it is justified and the punishment", inline=False)
   embed.add_field(name="`m!staffreport`", value="Reports a user and allows others to vote if it is justified and the punishment", inline=False)
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185") 
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056") 
   await ctx.send(embed=embed)
 
 @help.command(name='other')
@@ -460,7 +569,8 @@ async def other(ctx):
   embed.add_field(name="`m!hello`", value="Returns with hello wassup", inline=False) 
   embed.add_field(name="`m!invite`", value="Brings up the link to invite this bot to your different servers", inline=False) 
   embed.add_field(name="`m!8ball`", value="Enter 'm!8ball {question} and get a random answer for it'", inline=False) 
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  embed.add_field(name="`m!help_server`", value="Invite to the Monday Help Server. Alternate command for the same result is `m!server`", inline=False) 
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
   await ctx.send(embed=embed)
 
 @help.command(name='mathfun')
@@ -469,7 +579,7 @@ async def mathfun(ctx):
   embed.add_field(name="`m!guess`", value="Guess a random number between 1 and 100", inline=False) 
   embed.add_field(name="`m!roll`", value="Rolls a 6 sided die", inline=False)
   embed.add_field(name="`m!flip`", value="Flips a coin", inline=False)
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
   await ctx.send(embed=embed)
 
 @help.command(name='basketball')
@@ -480,7 +590,7 @@ async def basketball(ctx):
   embed.add_field(name="`m!irving`", value="Returns with Kyrie Irving's picture", inline=False)
   embed.add_field(name="`m!mj`", value="Returns with Michael Jordan's picture", inline=False)
   embed.add_field(name="`m!durant`", value="Returns with Kevin Durant's picture", inline=False)
-  embed.set_footer(text="Bot created by mathkido, for any questions regarding bot please dm mathkido#8185")
+  embed.set_footer(text="Bot created by DaBoss, for any questions regarding bot please dm DaBoss#9056")
   await ctx.send(embed=embed)
 
 
