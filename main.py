@@ -67,6 +67,24 @@ async def roll(ctx):
   number = random.randint(1, 6)
   await ctx.send(f"{number} was rolled")
 
+#and msg.channel == ctx.channel
+
+@client.command()
+@commands.cooldown(1,86400,commands.BucketType.user)
+async def potdanswer(ctx):
+  await ctx.send("WAITING FOR INPUT")
+  def check(msg):
+        return msg.author == ctx.author
+
+  msg = await client.wait_for("message", check=check)
+  if msg.content.lower() == "3, 2, 1":
+    await ctx.author.send("THAT IS CORRECT!")
+    channel = client.get_channel(837700765203038269)
+    message = (f'{ctx.author.mention} has solved the POTD')
+    await channel.send(message)
+  else:
+    await ctx.author.send("Unfortunately that is incorrect.")
+
 @client.command()
 async def flip(ctx):
   number = random.randint(1, 2)
